@@ -1,0 +1,30 @@
+<html>
+
+<body>
+    <div class="wsd" wsd_style="rose">
+        <pre>
+            title Exec
+
+            Client->+Server: exec ( endpoint, params )
+            
+            Server->+Method: authorize ( )
+            Method-->-Server: authorized
+            
+            alt authorized == true
+            
+            Server->+Method: exec ( params )
+            Method-->-Server: results
+            
+            Server-->-Client: exec_results ( results )
+            
+            else authorized == false
+            
+                Server->Client: error ( UNAUTHORIZED )
+            
+            end
+            </pre>
+    </div>
+    <script type="text/javascript" src="http://www.websequencediagrams.com/service.js"></script>
+</body>
+
+</html>

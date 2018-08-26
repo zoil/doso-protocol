@@ -1,0 +1,46 @@
+<html>
+
+<body>
+    <div class="wsd" wsd_style="rose">
+        <pre>
+            title Watch
+
+            Client->+Server: watch ( params )
+            
+            Server->+Publication: authorize ( )
+            Publication-->-Server: authorized
+            
+            alt authorized == true
+            
+            Server->+Publication: create_subscription ( )
+            Publication-->-Server: subscription_id
+            
+            Server-->-Client: confirm_subscription ( subscription_id )
+            
+            Server->+Publication: get_latest_data ( subscription_id )
+            Publication-->-Server: data
+            Server-->Client: subscription_data ( data )
+            
+            loop until unwatch
+            Publication->Server: changeset
+            Server->Client: subscription_updated ( changeset )
+            end
+            
+            Client->+Server: unwatch ( )
+            
+            Server->+Publication: unwatch ( )
+            Publication-->-Server: confirmed
+            
+            Server-->-Client: confirm_unwatch ( confirmed )
+            
+            else authorized == false
+            
+                Server->Client: error ( UNAUTHORIZED )
+            
+            end
+        </pre>
+    </div>
+    <script type="text/javascript" src="http://www.websequencediagrams.com/service.js"></script>
+</body>
+
+</html>

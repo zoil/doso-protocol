@@ -1,0 +1,31 @@
+<html>
+
+<body>
+    <div class="wsd" wsd_style="rose">
+        <pre>
+title Connect
+
+note over Client,Server: set_protocol HANDSHAKE
+note over Client,Server: set_state CONNECTING
+
+Client->Server: connect(SUPPORTED_VERSIONS)
+
+opt no mutually shared protocol version
+    Server->Client: error(UNSUPPORTED)
+    note over Server: disconnect
+end
+
+Server->Client: switch_protocol(HIGHEST_SHARED)
+
+note over Client,Server: set_protocol HIGHEST_SHARED
+
+Client->Server: request_session
+Server->Client: confirm_session
+
+note over Client,Server: set_state CONNECTED
+        </pre>
+    </div>
+    <script type="text/javascript" src="http://www.websequencediagrams.com/service.js"></script>
+</body>
+
+</html>
